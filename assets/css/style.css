@@ -1,0 +1,38 @@
+html , body{
+    background: url(https://www.dailydot.com/wp-content/uploads/c72/2e/af89d5794935b7b01bc54471f495376c.jpg) no-repeat center center fixed;
+    height:100%;
+    width:100%;
+    margin:0;
+}
+.welcome{
+    font-family: 'Monoton', cursive;
+    font-size: 32px;
+    text-align: center; 
+}
+.jumbotron{
+    color: rgb(16, 114, 13);
+}
+h3{
+    font-family: 'Chewy', cursive;
+    font-size: 28px;
+    font-weight: lighter;
+    text-align: center;
+    color: rgb(8, 80, 131);
+}
+#loose, #guess1, #win,#live,#remaining,#remaining_letter{
+    font-family: 'Nanum Brush Script', cursive;
+    font-size: 28px;
+    margin-left:30px;
+}
+#restart,#start,#next{
+   margin-left: 55px;
+   margin-top:20px;
+   font-family: 'Oswald', sans-serif;
+}
+span{
+    font-size:28px;
+}
+img{
+    width:26%;
+    margin-left:170px;
+}

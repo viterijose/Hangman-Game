@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Chewy" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <script src="assets/javascript/game.js"></script>
+
+    <title>Hangman-Game</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="jumbotron">
+                    <h1 class="welcome">Welcome to Hangman!!</h1>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <nav class="navbar navbar-default">
+                    <h3>This Hangman will choose games from three different consoles :PS4, XBOX ONE and Nintendo Switch. You
+                        will guess which game it is!!</h3>
+                </nav>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-7">
+                    <nav class="navbar navbar-default">
+                        <div class="container">
+                            <img class="img1" src="http://img.photobucket.com/albums/v60/PandoraSD/Hangman/H1.gif">
+                            <img class="img1" src="http://img.photobucket.com/albums/v60/PandoraSD/Hangman/H2.gif">
+                            <img class="img1" src="http://img.photobucket.com/albums/v60/PandoraSD/Hangman/H3.gif">
+                            <img class="img1" src="http://img.photobucket.com/albums/v60/PandoraSD/Hangman/H4.gif">
+                            <img class="img1" src="http://img.photobucket.com/albums/v60/PandoraSD/Hangman/H5.gif">
+                            <img class="img1" src="http://img.photobucket.com/albums/v60/PandoraSD/Hangman/H6.gif">
+
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-xs-5">
+                    <nav class="navbar navbar-default">
+                        <div class="row">
+                            <div class="navbar-header">
+                                <button id="start" type="button" class="btn btn-lg btn-success">START</button>
+                                <button id="restart" type="button" class="btn btn-lg btn-warning">RESTART</button>
+                                <button id="next" type="button" class="btn btn-lg btn-primary">NEXT</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div id="guess1">CHOSEN WORD :
+                                <span id="guess"></span>
+                                <hr>
+                            </div>
+
+                            <div id="win">WINS :
+                                <span id="wins"></span>
+                                <hr>
+                            </div>
+
+                            <div id="loose">LOSSES :
+                                <span id="losses"></span>
+                                <hr>
+                            </div>
+
+                            <div id="live">LIVES :
+                                <span id="lives"></span>
+                                <hr>
+                            </div>
+
+                            <div id="remaining">REMAINING GUESSES :
+                                <span id="remain"></span>
+                                <hr>
+                            </div>
+
+                            <div id="remaining_letter">REMAINING LETTERS :
+                                <span id="remains"></span>
+                                <hr>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
