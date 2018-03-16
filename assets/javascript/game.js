@@ -7,12 +7,16 @@ window.onload = function () {//initialize game once the page starts up
         'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z']; //created an array for the alphabet
 
-    var game, chose, answers, wrong_key, userguess, count, reamining, wins, losses, lives, remaining_guesses, remaining_letters, alph;
+    var game, chose, answers, wrong_key, userguess, count, reamining, wins, losses, lives, remaining_guesses, remaining_letters, alph, gameover;
 
     document.getElementById("next").style.visibility = "hidden";
-    document.getElementsByClassName("img1").style.visibility = "hidden";
+    // document.getElementsByClassName("img1").style.visibility = "hidden";
 
-    document.getElementById("start").onclick = function start() {
+    wins = 0;
+    losses = 0;
+
+   
+    function start() {
         //------------------------VARIABLES----------------------------------------
 
         game = games[Math.floor(Math.random() * games.length)];//Randomly selected the word out of the array
@@ -23,10 +27,9 @@ window.onload = function () {//initialize game once the page starts up
         userguess = 0;
         count = 0;
         remaining = game.length;
-        wins = 0;
-        losses = 0;
         lives = 3;
         remaining_guesses = 5;
+        gameover = false;
 
         //--------------------------------------------------------------------------
 
@@ -52,7 +55,9 @@ window.onload = function () {//initialize game once the page starts up
         //--------------------------------------------------------------------------
     }
 
-    document.getElementById("next").onclick = function gaming() {
+    document.getElementById("start").onclick = start
+
+    function gaming() {
         game = games[Math.floor(Math.random() * games.length)];
         chosen = [];//empty array to put the letters in each word chosen at random by PC to later compare to what user inputs
         answers = [];//created an empty array to be used later for displaying the amount of letters in the word using underscore
@@ -62,10 +67,12 @@ window.onload = function () {//initialize game once the page starts up
         count = 0;
         remaining = game.length;
         remaining_guesses = 5;
+        gameover = false;
         for (var i = 0; i < game.length; i++) {     //split string of the word into characters to store in an array to later compare with the letter the user guessed
             chosen.push(game.charAt(i));
             answers[i] = "_";
         }
+        document.getElementById("wins").innerHTML = wins;
         remaining_letters = answers.length;//use length of array minus the amount of letters inside word
 
         //--------------------------------------------------------------------------
@@ -80,15 +87,14 @@ window.onload = function () {//initialize game once the page starts up
         document.getElementById("remain").innerHTML = remaining_guesses;
         document.getElementById("lives").innerHTML = lives;
         document.getElementById("next").style.visibility = "hidden";
-       
-
-
     }
+
+    document.getElementById("next").onclick = gaming;
 
     document.getElementById("restart").onclick = start;
 
     document.onkeyup = function (event) {//user presses a key
- 
+
         var letter = String.fromCharCode(event.which).toLocaleLowerCase();//created a variable to store the users input and change it to lower case
         wrong_key = alphabet.indexOf(letter);//compares the letter pressed to the array alphabet
         userguess = chosen.indexOf(letter);
@@ -103,25 +109,25 @@ window.onload = function () {//initialize game once the page starts up
         if (userguess != -1) { //if the user guessed letter is in the word
 
             for (var j = 0; j < game.length; j++) {//runs through the array of the word chosen comparing it to the letter guessed, replacing the letter in the correct position
-                
+
                 if (game[j] === letter && alph.indexOf(letter) == -1) {
                     answers[j] = letter;
                     count++;
                     remaining_letters = game.length - count; //stores the amount of letters remaining according to the user guess and the letters in the word
                 } else {
                     remaining_letters = game.length - count;
-                    
+
                 }
             }
             alph.push(letter);
-            
+
             if (remaining_letters == 0 && remaining_guesses > 0) {
                 wins++;
-                answers = [];
-                chosen = [];
+                console.log(wins);
                 document.getElementById("wins").innerHTML = wins;
-                document.onkeyup = null;
-                document.getElementById("next").style.visibility = "visible";
+                // document.onkeyup = null;//without disabling keyboard keyboard the wins stack up if the user presses a letter that is in the word
+                // document.getElementById("next").style.visibility = "visible";
+                gaming();
             }
 
             alert("You guessed it!!");
@@ -132,7 +138,7 @@ window.onload = function () {//initialize game once the page starts up
             document.getElementById("remains").innerHTML = remaining_letters;
         }
 
-        if (userguess == -1 && remaining_guesses > 0 ) { //if the user guessed letter is used in the word
+        if (userguess == -1 && remaining_guesses > 0) { //if the user guessed letter is used in the word
             alert("WRONG GUESS!!");
             remaining_guesses--;
             document.getElementById("remain").innerHTML = remaining_guesses;
