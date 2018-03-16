@@ -43,3 +43,11 @@ img{
 .container-1{
     height: 592px;
 }
+#canvas{
+    position: absolute;
+    top: 50px;
+    left: 150px;
+    border-left: solid 4px rgb(49, 40, 14);
+    border-top: solid 4px rgb(49, 40, 14);
+}
+

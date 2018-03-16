@@ -8,7 +8,8 @@ window.onload = function () {//initialize game once the page starts up
         't', 'u', 'v', 'w', 'x', 'y', 'z']; //created an array for the alphabet
 
     var game, chose, answers, wrong_key, userguess, count, reamining, wins, losses, lives, remaining_guesses, remaining_letters, alph, gameover;
-
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
     document.getElementById("next").style.visibility = "hidden";
 
     wins = 0;
@@ -27,8 +28,9 @@ window.onload = function () {//initialize game once the page starts up
         count = 0;
         remaining = game.length;
         lives = 3;
-        remaining_guesses = 5;
+        remaining_guesses = 6;
         gameover = false;
+        // document.getElementById("canvas").style.visibility = "hidden";
 
         //--------------------------------------------------------------------------
 
@@ -57,6 +59,8 @@ window.onload = function () {//initialize game once the page starts up
     document.getElementById("start").onclick = start
 
     function gaming() {
+
+
         game = games[Math.floor(Math.random() * games.length)];
         chosen = [];//empty array to put the letters in each word chosen at random by PC to later compare to what user inputs
         answers = [];//created an empty array to be used later for displaying the amount of letters in the word using underscore
@@ -65,13 +69,14 @@ window.onload = function () {//initialize game once the page starts up
         userguess = 0;
         count = 0;
         remaining = game.length;
-        remaining_guesses = 5;
-        gameover = false;
+        remaining_guesses = 6;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (var i = 0; i < game.length; i++) {     //split string of the word into characters to store in an array to later compare with the letter the user guessed
             chosen.push(game.charAt(i));
             answers[i] = "_";
         }
         document.getElementById("wins").innerHTML = wins;
+        // document.getElementById("canvas").style.visibility = "hidden";
         remaining_letters = answers.length;//use length of array minus the amount of letters inside word
 
         //--------------------------------------------------------------------------
@@ -87,8 +92,65 @@ window.onload = function () {//initialize game once the page starts up
         document.getElementById("lives").innerHTML = lives;
         document.getElementById("next").style.visibility = "hidden";
     }
-
+    
     document.getElementById("next").onclick = gaming;
+
+    function drawing() {
+        console.log("number of guesses left***** : " + remaining_guesses);
+        var draw = {
+            head: function () {
+                ctx.moveTo(200, 0);
+                ctx.lineTo(200, 10);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(200, 50, 40, 0, 2 * Math.PI);
+                ctx.stroke();
+            },
+            body: function () {
+                ctx.moveTo(200, 90);
+                ctx.lineTo(200, 300);
+                ctx.stroke();
+            },
+            left_leg: function () {
+                ctx.moveTo(200, 300);
+                ctx.lineTo(100, 400);
+                ctx.stroke();
+            },
+            right_leg: function () {
+                ctx.moveTo(200, 300);
+                ctx.lineTo(280, 400);
+                ctx.stroke();
+            },
+            left_arm: function () {
+                ctx.moveTo(200, 120);
+                ctx.lineTo(105, 20);
+                ctx.stroke();
+            },
+            right_arm: function () {
+                ctx.moveTo(200, 120);
+                ctx.lineTo(285, 20);
+                ctx.stroke();
+            }
+        }
+        if (remaining_guesses <= 5) {
+            draw.head();
+        }
+        if (remaining_guesses <= 4) {
+            draw.body();
+        }
+        if (remaining_guesses <= 3) {
+            draw.left_arm();
+        }
+        if (remaining_guesses <= 2) {
+            draw.left_leg();
+        }
+        if (remaining_guesses <= 1) {
+            draw.right_arm();
+        }
+        if (remaining_guesses == 0) {
+            draw.right_leg();
+        }
+    }
 
     document.getElementById("restart").onclick = start;
 
@@ -132,15 +194,16 @@ window.onload = function () {//initialize game once the page starts up
             alert("WRONG GUESS!!");
             if (wrong_key == -1) {
                 remaining_guesses = remaining_guesses;
-            }else{
-            remaining_guesses--;
-            //put images to appear when each guess is wrong
-            document.getElementsByClassName("img1").visibility= "visible";
+            } else {
+                remaining_guesses--;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawing();
             }
             document.getElementById("remain").innerHTML = remaining_guesses;
             if (remaining_guesses == 0) {
                 losses++;
                 lives--;
+                chosen = [];
                 document.getElementById("next").style.visibility = "visible";
                 document.getElementById("lives").innerHTML = lives;
                 document.getElementById("losses").innerHTML = losses;
@@ -149,6 +212,7 @@ window.onload = function () {//initialize game once the page starts up
                     document.getElementById("lives").innerHTML = lives;
                     alert("You lost!!!");
                     answers = [];
+                    chosen = [];
                 }
             }
 
