@@ -10,12 +10,11 @@ window.onload = function () {//initialize game once the page starts up
     var game, chose, answers, wrong_key, userguess, count, reamining, wins, losses, lives, remaining_guesses, remaining_letters, alph, gameover;
 
     document.getElementById("next").style.visibility = "hidden";
-    // document.getElementsByClassName("img1").style.visibility = "hidden";
 
     wins = 0;
     losses = 0;
 
-   
+
     function start() {
         //------------------------VARIABLES----------------------------------------
 
@@ -102,21 +101,14 @@ window.onload = function () {//initialize game once the page starts up
         console.log("guessed letter :" + letter);
         console.log("position of letter in array :" + userguess);
 
-        if (wrong_key == -1) {//if the button pressed by user is not a letter it will alert them
-            alert("Try using a letter in the human alphabet");
-        }
-
         if (userguess != -1) { //if the user guessed letter is in the word
-
             for (var j = 0; j < game.length; j++) {//runs through the array of the word chosen comparing it to the letter guessed, replacing the letter in the correct position
-
                 if (game[j] === letter && alph.indexOf(letter) == -1) {
                     answers[j] = letter;
                     count++;
                     remaining_letters = game.length - count; //stores the amount of letters remaining according to the user guess and the letters in the word
                 } else {
                     remaining_letters = game.length - count;
-
                 }
             }
             alph.push(letter);
@@ -125,8 +117,6 @@ window.onload = function () {//initialize game once the page starts up
                 wins++;
                 console.log(wins);
                 document.getElementById("wins").innerHTML = wins;
-                // document.onkeyup = null;//without disabling keyboard keyboard the wins stack up if the user presses a letter that is in the word
-                // document.getElementById("next").style.visibility = "visible";
                 gaming();
             }
 
@@ -140,14 +130,23 @@ window.onload = function () {//initialize game once the page starts up
 
         if (userguess == -1 && remaining_guesses > 0) { //if the user guessed letter is used in the word
             alert("WRONG GUESS!!");
+            if (wrong_key == -1) {
+                remaining_guesses = remaining_guesses;
+            }else{
             remaining_guesses--;
+            //put images to appear when each guess is wrong
+            document.getElementsByClassName("img1").visibility= "visible";
+            }
             document.getElementById("remain").innerHTML = remaining_guesses;
             if (remaining_guesses == 0) {
+                losses++;
                 lives--;
                 document.getElementById("next").style.visibility = "visible";
                 document.getElementById("lives").innerHTML = lives;
+                document.getElementById("losses").innerHTML = losses;
                 if (lives == 0) {
                     document.getElementById("next").style.visibility = "hidden";
+                    document.getElementById("lives").innerHTML = lives;
                     alert("You lost!!!");
                     answers = [];
                 }
