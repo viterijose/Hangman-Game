@@ -20,7 +20,7 @@ h3{
     text-align: center;
     color: rgb(8, 80, 131);
 }
-#loose, #guess1, #win,#live,#remaining,#remaining_letter{
+#loose, #guess1, #win,#live,#remaining,#remaining_letter,#letter_guessed{
     font-family: 'Nanum Brush Script', cursive;
     font-size: 28px;
     margin-left:30px;

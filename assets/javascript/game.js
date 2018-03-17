@@ -1,7 +1,7 @@
 // $(document).ready(function () {//initialize game once the page starts up
 window.onload = function () {//initialize game once the page starts up
 
-    var games = ["deisitiny", "batetlefield", "zeleda"];//Created an array that has the words for the game
+    var games = ["destiny", "battlefield", "zelda", "fallout", "overwatch","uncharted","minecraft","hitman","halo","injustice","splatoon","arms","snipperclips","mariokart"];//Created an array that has the words for the game
 
     var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
         'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
@@ -11,6 +11,9 @@ window.onload = function () {//initialize game once the page starts up
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     document.getElementById("next").style.visibility = "hidden";
+    var audio_1 = document.createElement("audio");
+    audio_1.setAttribute("src", "./assets/javascript/loose_life.mp3");
+    var aud = document.getElementById("audio");
 
     wins = 0;
     losses = 0;
@@ -60,7 +63,7 @@ window.onload = function () {//initialize game once the page starts up
 
     function gaming() {
 
-
+        aud.play();
         game = games[Math.floor(Math.random() * games.length)];
         chosen = [];//empty array to put the letters in each word chosen at random by PC to later compare to what user inputs
         answers = [];//created an empty array to be used later for displaying the amount of letters in the word using underscore
@@ -73,10 +76,10 @@ window.onload = function () {//initialize game once the page starts up
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (var i = 0; i < game.length; i++) {     //split string of the word into characters to store in an array to later compare with the letter the user guessed
             chosen.push(game.charAt(i));
-            answers[i] = "_";
+ 
+                answers[i] = "_";
         }
         document.getElementById("wins").innerHTML = wins;
-        // document.getElementById("canvas").style.visibility = "hidden";
         remaining_letters = answers.length;//use length of array minus the amount of letters inside word
 
         //--------------------------------------------------------------------------
@@ -92,7 +95,7 @@ window.onload = function () {//initialize game once the page starts up
         document.getElementById("lives").innerHTML = lives;
         document.getElementById("next").style.visibility = "hidden";
     }
-    
+
     document.getElementById("next").onclick = gaming;
 
     function drawing() {
@@ -157,11 +160,14 @@ window.onload = function () {//initialize game once the page starts up
     document.onkeyup = function (event) {//user presses a key
 
         var letter = String.fromCharCode(event.which).toLocaleLowerCase();//created a variable to store the users input and change it to lower case
+        var letterup = String.fromCharCode(event.which).toLocaleUpperCase();
         wrong_key = alphabet.indexOf(letter);//compares the letter pressed to the array alphabet
         userguess = chosen.indexOf(letter);
         console.log(alph);
         console.log("guessed letter :" + letter);
         console.log("position of letter in array :" + userguess);
+        
+        // document.getElementById("letter_guess").innerHTML = letterup;
 
         if (userguess != -1) { //if the user guessed letter is in the word
             for (var j = 0; j < game.length; j++) {//runs through the array of the word chosen comparing it to the letter guessed, replacing the letter in the correct position
@@ -201,6 +207,7 @@ window.onload = function () {//initialize game once the page starts up
             }
             document.getElementById("remain").innerHTML = remaining_guesses;
             if (remaining_guesses == 0) {
+                alert("Bring on the next word!");
                 losses++;
                 lives--;
                 chosen = [];
@@ -210,7 +217,7 @@ window.onload = function () {//initialize game once the page starts up
                 if (lives == 0) {
                     document.getElementById("next").style.visibility = "hidden";
                     document.getElementById("lives").innerHTML = lives;
-                    alert("You lost!!!");
+                    alert("GAMEOVER!!!");
                     answers = [];
                     chosen = [];
                 }
