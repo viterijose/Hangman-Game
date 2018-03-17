@@ -11,9 +11,60 @@ window.onload = function () {//initialize game once the page starts up
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     document.getElementById("next").style.visibility = "hidden";
-    var audio_1 = document.createElement("audio");
-    audio_1.setAttribute("src", "./assets/javascript/loose_life.mp3");
-    var aud = document.getElementById("audio");
+    var audio1 = document.getElementById("audio1");
+    var aduio2 = document.getElementById("audio2");
+    var audio3 = document.getElementById("audio3");
+    var aduio4 = document.getElementById("audio4");
+    var audio5 = document.getElementById("audio5");
+    // var aduio6 = document.getElementById("audio6");// reserved for restart button
+    // audio1.pause();
+    // audio2.pause();
+    // audio3.pause();
+    // audio4.pause();
+    // audio5.pause();
+    // audio6.play();
+
+    var draw = {
+        right_arm: function () {
+            ctx.beginPath();
+            ctx.moveTo(200, 120);
+            ctx.lineTo(285, 20);
+            ctx.stroke();
+        },
+        left_arm: function () {
+            ctx.beginPath();
+            ctx.moveTo(200, 120);
+            ctx.lineTo(105, 20);
+            ctx.stroke();
+        },
+        right_leg: function () {
+            ctx.beginPath();
+            ctx.moveTo(200, 300);
+            ctx.lineTo(280, 400);
+            ctx.stroke();
+        },
+        left_leg: function () {
+            ctx.beginPath();
+            ctx.moveTo(200, 300);
+            ctx.lineTo(100, 400);
+            ctx.stroke();
+        },
+        body: function () {
+            ctx.beginPath();
+            ctx.moveTo(200, 90);
+            ctx.lineTo(200, 300);
+            ctx.stroke();
+        },
+        head: function () {
+            ctx.beginPath();
+            ctx.moveTo(200, 0);
+            ctx.lineTo(200, 10);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(200, 50, 40, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+    }
 
     wins = 0;
     losses = 0;
@@ -21,7 +72,7 @@ window.onload = function () {//initialize game once the page starts up
 
     function start() {
         //------------------------VARIABLES----------------------------------------
-
+        
         game = games[Math.floor(Math.random() * games.length)];//Randomly selected the word out of the array
         chosen = [];//empty array to put the letters in each word chosen at random by PC to later compare to what user inputs
         answers = [];//created an empty array to be used later for displaying the amount of letters in the word using underscore
@@ -59,11 +110,13 @@ window.onload = function () {//initialize game once the page starts up
         //--------------------------------------------------------------------------
     }
 
-    document.getElementById("start").onclick = start
+    document.getElementById("start").onclick = start;
+
+    document.getElementById("next").onclick = gaming;
 
     function gaming() {
 
-        aud.play();
+        // aud.play();
         game = games[Math.floor(Math.random() * games.length)];
         chosen = [];//empty array to put the letters in each word chosen at random by PC to later compare to what user inputs
         answers = [];//created an empty array to be used later for displaying the amount of letters in the word using underscore
@@ -96,63 +149,13 @@ window.onload = function () {//initialize game once the page starts up
         document.getElementById("next").style.visibility = "hidden";
     }
 
-    document.getElementById("next").onclick = gaming;
+
 
     function drawing() {
         console.log("number of guesses left***** : " + remaining_guesses);
-        var draw = {
-            head: function () {
-                ctx.moveTo(200, 0);
-                ctx.lineTo(200, 10);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(200, 50, 40, 0, 2 * Math.PI);
-                ctx.stroke();
-            },
-            body: function () {
-                ctx.moveTo(200, 90);
-                ctx.lineTo(200, 300);
-                ctx.stroke();
-            },
-            left_leg: function () {
-                ctx.moveTo(200, 300);
-                ctx.lineTo(100, 400);
-                ctx.stroke();
-            },
-            right_leg: function () {
-                ctx.moveTo(200, 300);
-                ctx.lineTo(280, 400);
-                ctx.stroke();
-            },
-            left_arm: function () {
-                ctx.moveTo(200, 120);
-                ctx.lineTo(105, 20);
-                ctx.stroke();
-            },
-            right_arm: function () {
-                ctx.moveTo(200, 120);
-                ctx.lineTo(285, 20);
-                ctx.stroke();
-            }
-        }
-        if (remaining_guesses <= 5) {
-            draw.head();
-        }
-        if (remaining_guesses <= 4) {
-            draw.body();
-        }
-        if (remaining_guesses <= 3) {
-            draw.left_arm();
-        }
-        if (remaining_guesses <= 2) {
-            draw.left_leg();
-        }
-        if (remaining_guesses <= 1) {
-            draw.right_arm();
-        }
-        if (remaining_guesses == 0) {
-            draw.right_leg();
-        }
+        
+        draw[Object.keys(draw)[remaining_guesses]]()
+
     }
 
     document.getElementById("restart").onclick = start;
@@ -166,8 +169,6 @@ window.onload = function () {//initialize game once the page starts up
         console.log(alph);
         console.log("guessed letter :" + letter);
         console.log("position of letter in array :" + userguess);
-        
-        // document.getElementById("letter_guess").innerHTML = letterup;
 
         if (userguess != -1) { //if the user guessed letter is in the word
             for (var j = 0; j < game.length; j++) {//runs through the array of the word chosen comparing it to the letter guessed, replacing the letter in the correct position
@@ -185,9 +186,10 @@ window.onload = function () {//initialize game once the page starts up
                 wins++;
                 console.log(wins);
                 document.getElementById("wins").innerHTML = wins;
+                audio3.play();
                 gaming();
             }
-
+            audio5.play();
             alert("You guessed it!!");
             console.log("amount of letters in word :" + count);
             console.log("amount of letters remaining :" + remaining_letters);
@@ -198,11 +200,11 @@ window.onload = function () {//initialize game once the page starts up
 
         if (userguess == -1 && remaining_guesses > 0) { //if the user guessed letter is used in the word
             alert("WRONG GUESS!!");
+            audio2.play();
             if (wrong_key == -1) {
                 remaining_guesses = remaining_guesses;
             } else {
                 remaining_guesses--;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 drawing();
             }
             document.getElementById("remain").innerHTML = remaining_guesses;
@@ -210,6 +212,7 @@ window.onload = function () {//initialize game once the page starts up
                 alert("Bring on the next word!");
                 losses++;
                 lives--;
+                audio1.play();
                 chosen = [];
                 document.getElementById("next").style.visibility = "visible";
                 document.getElementById("lives").innerHTML = lives;
@@ -217,6 +220,7 @@ window.onload = function () {//initialize game once the page starts up
                 if (lives == 0) {
                     document.getElementById("next").style.visibility = "hidden";
                     document.getElementById("lives").innerHTML = lives;
+                    audio4.play();
                     alert("GAMEOVER!!!");
                     answers = [];
                     chosen = [];
