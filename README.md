@@ -10,4 +10,4 @@ Simple hangman game applying logic via Javascript, styling using CSS as well as 
 
 - Continue guessing until you've guessed the correct letter or have lost the game!
 
-- If you loose the game you can always rerun the logic by pressing the button.
+- If you loose the game you can always rerun the logic by pressing the Restart button.
